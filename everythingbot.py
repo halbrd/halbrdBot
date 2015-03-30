@@ -2,6 +2,9 @@
 #  qhelp
 #  finish reminder + add to help documentation
 #       fix parse error message
+# 		probably create reminder class and instantiate for each reminder
+# clean up !profile results
+# !meme - random imgur image?
 
 
 import Skype4Py
@@ -11,6 +14,11 @@ import datetime
 import sqlite3
 from time import mktime
 from multiprocessing import Process
+import string
+import random
+import urllib2
+import hashlib
+import sys
 
 class SkypeBot(object):
 
@@ -81,6 +89,41 @@ class SkypeBot(object):
 
             self._msgRet = "Reminder! [" + text + "]"
 
+    def meme(self, string_length):
+        print "Running meme()"
+        CHARS = string.ascii_letters+string.digits # Characters used for random URLs.
+        STRING_LENGTH = string_length
+        ERRORS_DISPLAY = True # Should all errors display?
+        IMAGE_EXTENSION = ".png" # Extension for search.
+        IMAGE_SIZE_MIN = 1024 * 20 # Minimum filesize for downloaded images.
+        IMAGES_DEFAULT = 1 # Number of images to download if not specified at command line.
+        IMGUR_URL_PREFIX = "http://i.imgur.com/" # Prefix for Imgur URLs.
+
+        rand_string = ''.join([random.choice(CHARS) for x in range(STRING_LENGTH)])
+
+        print "Variables initialized. Starting loop"
+
+        end = False
+        while not end:
+            image_name = rand_string + IMAGE_EXTENSION
+            url = IMGUR_URL_PREFIX+image_name
+            print "Requesting"
+            req = urllib2.Request(url)
+            #data = None
+            print "Setting data"
+            data = urllib2.urlopen(req)
+
+            if data:
+                print "Reading data"
+                data = data.read()
+                if 'd835884373f4d6c8f24742ceabe74946' == hashlib.md5(data).hexdigest():
+                    self._msgRet = "Received placeholder image: "+image_name
+                elif IMAGE_SIZE_MIN > sys.getsizeof(data):
+                    self._msgret = "Received image is below minimum size threshold: "+image_name
+                else:
+                    end = True
+                    self._msgRet = url
+
     ###################################################################################
 
     # Some weird shit Skype4Py does to instantiate listeners
@@ -102,7 +145,7 @@ class SkypeBot(object):
 
                 # !ping command
                 # Returns "Pong!"
-                elif re.match("!ping", msg.Body):
+                elif msg.Body == "!ping" or re.match("!ping ", msg.Body):
                     self.ping()
 
                 # !members command
@@ -136,6 +179,11 @@ class SkypeBot(object):
                     p.join()
                     #self.remind(dto, text)
 
+                #elif msg.Body == "!meme":
+                #    self.meme(5)
+                #elif msg.Body == "!meme7":
+                #    self.meme(7)
+					
                 # Prints the finished message
                 if self._msgRet == "":
                     self._msgRet += "Unknown command. Type !help for a list of commands."
