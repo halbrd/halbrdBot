@@ -69,7 +69,6 @@ class SkypeBot(object):
         if not found:
             self._msgRet += "Profile not found."
 
-    # NEVER allow this command to become common knowledge!
     def orangecrush(self):
         self._msgRet = "!orangecrush"
 
@@ -160,7 +159,6 @@ class SkypeBot(object):
                     self.profile(skypeName, msg.Chat.Members)
 
                 # !orangecrush command
-                # Recurses infinitely - keep this secret!
                 elif re.match("!orangecrush", msg.Body):
                     self.orangecrush()
 
