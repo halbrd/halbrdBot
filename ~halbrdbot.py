@@ -29,7 +29,6 @@ import csv
 import pickle
 
 
-
 class SkypeBot(object):
 
     ### Initialize program data ###
