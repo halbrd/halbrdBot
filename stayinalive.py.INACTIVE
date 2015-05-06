@@ -1,0 +1,3 @@
+def stayinalive(self):
+    time.sleep(0.577)
+    return "!stayinalive"
