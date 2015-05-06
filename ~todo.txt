@@ -1,0 +1,18 @@
+Split help - all, general, convo-specific, admin
+!remind
+!meme
+Set up database for friend codes, blacklist and admins
+Write logs to file with start and end datetime on KeyboardInterrupt
+!add [skypename]
+Disable functions if william-holt or hugojmd is not in it, for better ego tripping
+!annoyinghelp - prints out very slowly
+!slap (user) - kicks and readds user
+spam kick filter - probably same function as !slap
+Handle common errors so they don't clutter the console
+!dongers
+Change name when running or down
+Blacklist
+!purge [time]
+!about - contributors, T&C, etc
+JackLanden - herald of Skypageddon
+!github - returns the repo
