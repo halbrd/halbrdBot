@@ -1,9 +1,7 @@
-import urllib2
 import urllib
 import urlparse
 import requests
 import json
-from collections import namedtuple
 from BeautifulSoup import BeautifulSoup
 
 
