@@ -1,2 +1,2 @@
-# everythingbot
-Github thinks that only Unix machines exist!
+# halbrdBot
+Dragging Skype kicking and screaming into a functional future™
